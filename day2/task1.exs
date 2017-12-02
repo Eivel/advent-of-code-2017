@@ -1,4 +1,4 @@
-File.stream!("task1_input")
+File.stream!("task_input")
 |> Stream.map(&String.trim/1)
 |> Stream.map(&String.split(&1, "	"))
 |> Stream.map(&Enum.map(&1, fn (ch) -> Integer.parse(ch) end))
