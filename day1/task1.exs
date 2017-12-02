@@ -1,26 +1,26 @@
 defmodule Task1 do
-  def initialize([head | tail], accumulator) do
-    sum_conditionally([head | tail], accumulator, head)
+  def initialize([head | tail]) do
+    sum_conditionally([head | tail], head)
   end
 
-  def sum_conditionally([ head1 | [ head1 | tail ]], accumulator, first) do
+  def sum_conditionally([ head1 | [ head1 | tail ]], first) do
     { parsed, "" } = Integer.parse(head1)
-    sum_conditionally([ head1 | tail ], accumulator + parsed, first)
+    parsed + sum_conditionally([ head1 | tail ], first)
   end
 
-  def sum_conditionally([ _ | [ head2 | tail]], accumulator, first) do
-    sum_conditionally([ head2 | tail ], accumulator, first)
+  def sum_conditionally([ _ | [ head2 | tail]], first) do
+    sum_conditionally([ head2 | tail ], first)
   end
 
-  def sum_conditionally([ first ], accumulator, first) do
+  def sum_conditionally([ first ], first) do
   { parsed, "" } = Integer.parse(first)
-    accumulator + parsed
+    parsed
   end
 
-  def sum_conditionally([ _ ], accumulator, _) do
-    accumulator
+  def sum_conditionally([ _ ], _) do
+    0
   end
 end
-input = "paste input here"
+input = "91212129"
 input_array = String.graphemes(input)
-IO.puts Task1.initialize(input_array, 0)
+IO.puts Task1.initialize(input_array)
