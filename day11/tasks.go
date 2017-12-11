@@ -14,13 +14,15 @@ func main() {
 	}
 	str := strings.TrimSpace(string(b))
 	arr := strings.Split(str, ",")
-	steps := calculateSteps(arr)
-	fmt.Println(steps)
+	distance, maxDistance := calculatePath(arr)
+	fmt.Printf("Shortest path: %v steps\n", distance)
+	fmt.Printf("Max distance: %v steps\n", maxDistance)
 }
 
-func calculateSteps(arr []string) int {
+func calculatePath(arr []string) (int, int) {
 	x := float64(0)
 	y := float64(0)
+	maxDistance := float64(0)
 	for _, el := range arr {
 		switch el {
 		case "n":
@@ -40,8 +42,12 @@ func calculateSteps(arr []string) int {
 			x--
 			y += 0.5
 		}
+		maxDistance = math.Max(maxDistance, calculateDistance(x, y))
 	}
-	x = math.Abs(x)
-	y = math.Abs(y)
-	return int(y - (x / 2) + x)
+
+	return int(calculateDistance(x, y)), int(maxDistance)
+}
+
+func calculateDistance(x float64, y float64) float64 {
+	return math.Abs(y) - (math.Abs(x) / 2) + math.Abs(x)
 }
